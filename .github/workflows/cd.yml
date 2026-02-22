@@ -25,6 +25,7 @@ jobs:
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
+        id: docker_build
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -34,4 +35,4 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
 
       - name: Image digest
-        run: echo "Pushed image with digest: ${{ steps.docker_build.outputs.digest }}"
+        run: echo "Image built and pushed successfully for version ${{ steps.version.outputs.VERSION }}"
